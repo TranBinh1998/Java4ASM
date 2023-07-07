@@ -19,7 +19,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="asmjava4" value="c06c1842-ddc5-42a2-9175-987ef07bbccb" />
+          <factory-entry name="asmjava4" value="b5344171-7e46-4498-aee6-eb92879b4b5e" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
@@ -66,6 +66,7 @@
     <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.staxex:stax-ex:1.8" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:9.4.1.jre16" level="project" />
     <orderEntry type="library" name="Maven: com.mysql:mysql-connector-j:8.0.31" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.19.4" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0" level="project" />

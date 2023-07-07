@@ -26,6 +26,9 @@ public interface UserSevice {
 
     User delete(String userName);
 
+    List<User> findUserLikedByVideoHref(String href);
+
+
 
 
 

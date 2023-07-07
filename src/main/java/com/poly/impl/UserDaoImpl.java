@@ -1,10 +1,12 @@
 package com.poly.impl;
 
+import com.poly.constant.NamedStored;
 import com.poly.dao.AbstractDao;
 import com.poly.dao.UserDao;
 import com.poly.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 // Thiết kế 1 lần sử dụng lại bằng kế thừa
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
@@ -65,5 +67,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User delete(User entity) {
         return super.delete(entity);
+    }
+
+    @Override
+    public List<User> findUsersLikedVideoByVideoHref(Map<String, Object> params) {
+        return super.callStored(NamedStored.FIND_USERS_LIKED_VIDEO_BY_VIDEO_HREF, params);
     }
 }

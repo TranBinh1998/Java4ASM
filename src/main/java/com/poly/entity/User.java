@@ -1,12 +1,22 @@
 package com.poly.entity;
 
+import com.poly.constant.NamedStored;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(name = NamedStored.FIND_USERS_LIKED_VIDEO_BY_VIDEO_HREF,
+                procedureName = "sp_selectUsersLikedVideoByVideoHref",
+                resultClasses = {User.class},
+                parameters = @StoredProcedureParameter(name = NamedStored.NAME_PARAMETER, type = String.class))
+})
 @Entity
 @Table(name = "users") // Trường hợp không mapping được dùng dấu `user`
 public class User {

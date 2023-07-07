@@ -1,5 +1,6 @@
 package com.poly.service.impl;
 
+import com.poly.constant.NamedStored;
 import com.poly.dao.UserDao;
 import com.poly.entity.User;
 import com.poly.impl.UserDaoImpl;
@@ -9,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserServiceImpl implements UserSevice {
 
@@ -94,5 +97,12 @@ public class UserServiceImpl implements UserSevice {
         user.setActive(Boolean.FALSE);
 
         return dao.update(user);
+    }
+
+    @Override
+    public List<User> findUserLikedByVideoHref(String href) {
+        Map<String, Object> params = new HashMap<>();
+        params.put(NamedStored.NAME_PARAMETER, href);
+        return dao.findUsersLikedVideoByVideoHref(params);
     }
 }
