@@ -250,13 +250,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="./index.html" class="nav-link ">
+                                <a href="<c:url value='/admin/video?action=view'/>" class="nav-link ">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Overview</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./index2.html" class="nav-link">
+                                <a href="<c:url value='/admin/video?action=add'/>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>New or Edit</p>
                                 </a>
@@ -317,14 +317,14 @@
                 </table>
             </div>
 
-            <h5></h5>
+
             <div class="card-body">
                 <div class="form-group">
                     <label>List Video</label>
                     <select id="selectVideo" class="custom-select">
                         <option selected disabled>Select one</option>
                         <c:forEach items="${videos}" var="item">
-                            <option value="${item.href}">${item.title}</option>
+                            <option value="${item.videoId}">${item.title}</option>
                         </c:forEach>
 
                     </select>
@@ -334,6 +334,7 @@
                     <tr>
                         <th>User Name</th>
                         <th>Email</th>
+
                     </tr>
                     </thead>
 
@@ -422,6 +423,30 @@
             "responsive": true,
         });
     });
+    $('#selectVideo').change(function (){
+        var videoId = $(this).val();
+        $.ajax({
+            url: 'favoritesAdmin?id=' +videoId,
+            type : 'GET',
+            contentType : 'application/json'
+        }).done(function (data) {
+             $('#example2').DataTable({
+                 destroy : true,
+                 "paging": true,
+                 "lengthChange": false,
+                 "searching": false,
+                 "ordering": true,
+                 "info": true,
+                 "autoWidth": false,
+                 "responsive": true,
+                 "aaData" : data,
+                 "columns" : [{"data" : "userName"},
+                     {"data" : "email"}]
+             });
+        });
+
+    });
+
 
 
 

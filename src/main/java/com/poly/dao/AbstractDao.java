@@ -122,7 +122,6 @@ public class AbstractDao<T> {
             entityManager.getTransaction().begin();
             entityManager.persist(entity);
             entityManager.getTransaction().commit();
-            System.out.println("Tạo thành công");
             return entity;
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -161,6 +160,7 @@ public class AbstractDao<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<T> callStored(String namedStored, Map<String, Object> params) {
         StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery(namedStored);
         params.forEach((key, value) -> query.setParameter(key, value));

@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>AdminLTE 3 | VideoOverView</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -232,7 +232,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item menu-open active">
-                        <a href="#" class="nav-link ">
+                        <a href="<c:url value='/admin'/>" class="nav-link ">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Home
@@ -241,7 +241,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="#" class="nav-link ">
+                        <a href="#" class="nav-link active ">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Video
@@ -250,7 +250,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<c:url value='/admin/video?action=view'/>" class="nav-link ">
+                                <a href="<c:url value='/admin/video?action=view'/>" class="nav-link active">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Overview</p>
                                 </a>
@@ -294,52 +294,42 @@
 
         <!-- Main content -->
         <section class="content">
+            <h3 class="card-title">List Video</h3>
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Href</th>
-                        <th>TotalLike</th>
+                        <th>Description</th>
+                        <th>Poster</th>
+                        <th>Action</th>
 
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${videos}" var="item">
-                    <tr>
-                        <td>${item.videoId}</td>
-                        <td>${item.title}</td>
-                        <td><a href="video?action=watch&id=${item.videoId}">${item.href}</a></td>
-                        <td>${item.totalLike}</td>
-                        </c:forEach>
+                        <tr>
+                            <td><a href="/video?action=watch&id=${item.id}">${item.id}</a></td>
+                            <td>${item.title}</td>
+                            <td>${item.href}</td>
+                            <td>
+                                <img src="${item.poster}" width="165px" height="135px">
+                            </td>
+                            <td>
+
+                                <button type="button" class="btn btn-block btn-success btn-sm">Add</button>
+                                <a href="/admin/video?action=edit&id=${item.id}" type="button" class="btn btn-block btn-primary btn-sm">Edit</a>
+                                <button type="button" onclick="deleteVideo('${item.id}')"
+                                        class="btn btn-block btn-danger btn-sm">Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
 
-
-            <div class="card-body">
-                <div class="form-group">
-                    <label>List Video</label>
-                    <select id="selectVideo" class="custom-select">
-                        <option selected disabled>Select one</option>
-                        <c:forEach items="${videos}" var="item">
-                            <option value="${item.videoId}">${item.title}</option>
-                        </c:forEach>
-
-                    </select>
-                </div>
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>User Name</th>
-                        <th>Email</th>
-
-                    </tr>
-                    </thead>
-
-                </table>
-            </div>
 
         </section>
         <!-- /.content -->
@@ -413,41 +403,18 @@
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
     });
-    $('#selectVideo').change(function (){
-        var videoId = $(this).val();
+
+    function deleteVideo(id) {
+        console.log(id);
         $.ajax({
-            url: 'favoritesAdmin?id=' +videoId,
-            type : 'GET',
-            contentType : 'application/json'
-        }).done(function (data) {
-             $('#example2').DataTable({
-                 destroy : true,
-                 "paging": true,
-                 "lengthChange": false,
-                 "searching": false,
-                 "ordering": true,
-                 "info": true,
-                 "autoWidth": false,
-                 "responsive": true,
-                 "aaData" : data,
-                 "columns" : [{"data" : "userName"},
-                     {"data" : "email"}]
-             });
+            url : '/admin/video?action=delete&id='+id
+        }).then(function () {
+            window.location.href = "http://localhost:8080/admin/video?action=view";
+        }).fail(function () {
+            alert("Please try agian !")
         });
-
-    });
-
-
+    };
 
 
 

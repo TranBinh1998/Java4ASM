@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserSevice {
     public List<User> findUserLikedByVideoHref(String href) {
         Map<String, Object> params = new HashMap<>();
         params.put(NamedStored.NAME_PARAMETER, href);
+
         return dao.findUsersLikedVideoByVideoHref(params);
     }
 }

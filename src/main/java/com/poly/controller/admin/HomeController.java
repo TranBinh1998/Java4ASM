@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poly.constant.SessionAttr;
 import com.poly.dto.VideoLikedInfo;
 import com.poly.entity.User;
+import com.poly.entity.Video;
 import com.poly.service.StatsService;
 import com.poly.service.UserSevice;
+import com.poly.service.VideoService;
 import com.poly.service.impl.StatsServiceImpl;
 import com.poly.service.impl.UserServiceImpl;
+import com.poly.service.impl.VideoServiceImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -26,6 +29,8 @@ public class HomeController extends HttpServlet {
     private StatsService statsService = new StatsServiceImpl();
 
     private UserSevice userSevice = new UserServiceImpl();
+
+    private VideoService videoService = new VideoServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -49,9 +54,21 @@ public class HomeController extends HttpServlet {
         PrintWriter out  = response.getWriter();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        String videoHref = request.getParameter("href");
+
+
+
+        String videoId = request.getParameter("id");
+        Video video  = new Video();
+
+        video = videoService.findByid(Integer.parseInt(videoId));
+
+        String videoHref = video.getHref();
+
+        System.out.println("href for jsp  = " +videoHref);
 
         List<User> listUser = userSevice.findUserLikedByVideoHref(videoHref);
+
+        System.out.println("size =" +listUser.size());
 
         if (listUser.isEmpty()) {
             response.setStatus(400);

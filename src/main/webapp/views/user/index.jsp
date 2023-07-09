@@ -34,7 +34,7 @@
         <c:forEach items="${videos}" var="video">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                 <figure class="effect-ming tm-video-item">
-                    <img src="${video.poster}" alt="Image" class="img-fluid">
+                    <img src="${video.poster}" width="360px" height="240px" alt="Image" class="">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>ViewMore</h2>
                         <a href="<c:url value='/video?action=watch&id=${video.id}'/>">View more</a>
